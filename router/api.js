@@ -19,21 +19,42 @@ router.get('/pk-10', (req, res, next) => {
 
 router.get('/data', (req, res, next) => {
     let type = req.query.type || 1;
-    let time = req.query.time;
-    let startTimes = moment(time).hour(8);
-    let endTime = moment(time).hour(24);
-    let coditions = { '$gte': startTimes, '$lte':endTime };
-    Pk10.count({ time: coditions }).then(total => {
-        Pk10.find({ time: coditions}).sort({ _id: -1 }).then(result => {
-            res.json({
-                code: 200,
-                data: {
-                    content: analysis(result, type),
-                    total
-                }
-            })
+    // let time = req.query.time || Date;
+    // let startTimes = moment(time).hour(8);
+    // let endTime = moment(time).hour(24);
+    // let coditions = { '$gte': startTimes, '$lte':endTime };
+    Pk10.find().limit(40).sort({ _id: -1 }).then(result => {
+        res.json({
+            code: 200,
+            data: {
+                content: analysis(result, type),
+                total:0
+            }
         })
     })
+    // Pk10.count({ }).then(total => {
+    //     if(total==0){
+    //         Pk10.find().limit(25).sort({ _id: -1 }).then(result => {
+    //             res.json({
+    //                 code: 200,
+    //                 data: {
+    //                     content: analysis(result, type),
+    //                     total
+    //                 }
+    //             })
+    //         })
+    //     }else{
+    //         Pk10.find({ time: coditions}).sort({ _id: -1 }).then(result => {
+    //             res.json({
+    //                 code: 200,
+    //                 data: {
+    //                     content: analysis(result, type),
+    //                     total
+    //                 }
+    //             })
+    //         })
+    //     }
+    // })
 })
 
 //
