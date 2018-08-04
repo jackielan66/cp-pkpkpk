@@ -21,9 +21,9 @@ function yuce(NumberRecord,_res) {
         let _rule1 = (v[0].pos - v[1].pos > 0 && v[1].pos - v[2].pos > 0) ||
             (v[0].pos - v[1].pos < 0 && v[1].pos - v[2].pos < 0);
         // 规则 2 前两期是重码的
-        let _rule2 = (v[0].pos - v[1].pos != 0 && v[1].pos - v[2].pos == 0);
+        let _rule2 = false;  //(v[0].pos - v[1].pos != 0 && v[1].pos - v[2].pos == 0);
         // 规则 3 两期两期都是重码的
-        let _rule3 = v[0].pos - v[1].pos != 0 && v[1].pos - v[2].pos == 0 && v[2].pos - v[3].pos != 0 && v[3].pos - v[4].pos == 0;
+        let _rule3 =false;// v[0].pos - v[1].pos != 0 && v[1].pos - v[2].pos == 0 && v[2].pos - v[3].pos != 0 && v[3].pos - v[4].pos == 0;
         let rule3WillCome = (v[0].pos - v[1].pos == 0 && v[1].pos - v[2].pos != 0 && v[2].pos - v[3].pos == 0);
         if (rule3WillCome) {
             let _obj = {

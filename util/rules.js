@@ -18,6 +18,7 @@ let getRule  = function(){
         // 提示规则3 下一期即将出现
         let rule3WillCome = (v[0].pos - v[1].pos == 0 && v[1].pos - v[2].pos != 0 && v[2].pos - v[3].pos == 0);
         if (rule3WillCome) {
+            return;
             let _obj = {
                 msg: ` 下一期会出现规则三，请期待吧 `
             }
@@ -26,6 +27,7 @@ let getRule  = function(){
         }
 
         if (_rule3) {
+            return;
             let resultNum = []; // 返回回去的号码
             let beforeNum, afterNum, numPos;
             numPos = v[0].pos; // 当前号码最新一期出现的位置
@@ -54,6 +56,7 @@ let getRule  = function(){
         }
 
         if (_rule2) {
+            return;
             let resultNum = []; // 返回回去的号码
             let beforeNum, afterNum, numPos;
             numPos = v[0].pos; // 当前号码最新一期出现的位置

@@ -4,7 +4,7 @@
 const request = require('request')
 const cheerio = require('cheerio')
 const Pk10 = require('../model/Pk10')
-let url = 'http://pk.770690.com/bjpk.php';
+let url ='http://pk.770690.com/bjpk.php' || 'http://www.bwlc.net/' || 'http://pk.770690.com/bjpk.php';
 
 const start = () => {
     let now = new Date();
@@ -27,10 +27,15 @@ function changeJqDom(body) {
     let $ = cheerio.load(body);
     let num = $('h2').html();
     let data = [];
+
     $('.cqssc-nums span').each((index, value) => {
         data.push($(value).text())
         // console.log($(value).text(),'vvv')
     })
+    // $('.pk10_bg .dib li').each((index, value) => {
+    //         data.push($(value).text())
+    //         // console.log($(value).text(),'vvv')
+    // })
     new Pk10({
         section: num,
         data: data,
