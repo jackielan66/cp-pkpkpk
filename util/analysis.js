@@ -68,6 +68,7 @@ function fenxiResult(result) {
                 _obj.id = v.id - 1;
                 _obj.num = v.num;
                 _obj.title = v.title;
+                _obj.prevPos = v.pos; // 前一期位置
                 if (_repeat) {
                     _obj.success = false;
                     _obj.msg = `去它的本期重复了`;

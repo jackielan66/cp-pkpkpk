@@ -68,6 +68,7 @@ function yuce(NumberRecord,_res) {
 
             let str = `号码${nowNum},规则${_rule3?"三":_rule2?"二":'一'} 推荐位置：${numPos+1}；号码：${copyArr}`
             let _obj = {
+                pos:numPos+1,
                 msg: str
             }
             data.push(_obj);
