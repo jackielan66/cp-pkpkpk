@@ -8,7 +8,10 @@
  */
 let init = require('./init')
 let _ = require('lodash');
+let currentErrorPos = []; // 上一期最近三个连续的数字位置集合
+
 function analysis(data, type) {
+    currentErrorPos = []; // 走分析其中先把重置
     return fenxiResult(data, init(data), type);
 }
 
@@ -62,6 +65,11 @@ function fenxiResult(_res, initData) {
                     _obj.success = true;
                     _obj.msg = `本期没有出现附件三个哦`;
                 }
+                // 新加的整理错误数据的集合 start
+                if(_obj.id==0 && _obj.success==false ){
+                    currentErrorPos.push(_obj.prevPos)
+                }
+                // 新加的整理错误数据的集合 end
                 detailData.push(_obj)
             })
             returnData.push(detailData)
@@ -148,4 +156,12 @@ function ruleType__2(item, i) {
     return item[i].pos - item[i + 1].pos != 0 && item[i + 1].pos - item[i + 2].pos == 0;
 }
 
-module.exports = analysis;
+
+function getCurrentErrorPos(){
+    return currentErrorPos
+}
+
+module.exports ={
+    analysis,
+    getCurrentErrorPos,
+} ;

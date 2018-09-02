@@ -3,10 +3,11 @@
  */
 let init = require('./init')
 let _ = require('lodash');
-
+let currentYucePos = []
 
 function foreCast(data) {
     // return yuce({},data);
+    currentYucePos = [];
     return yuce(init(data), data);
 }
 
@@ -73,11 +74,23 @@ function yuce(NumberRecord, _res) {
                 msg: str
             }
             data.push(_obj);
+            // 当期的位置的位置暴露出去start
+            currentYucePos.push(numPos);
+            // console.log(currentYucePos,'==currentYucePos 预测')
+            // 当期的位置的位置暴露出去end
             return;
         }
     })
     return data;
 }
 
+function getcurrentYucePos(){
+    return currentYucePos
+}
 
-module.exports = foreCast;
+exports.foreCast = foreCast;
+exports.getcurrentYucePos = getcurrentYucePos;
+// module.exports = {
+//     foreCast,
+//     currentErrorPos
+// };

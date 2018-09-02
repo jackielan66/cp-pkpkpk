@@ -6,8 +6,9 @@ let _ = require('lodash');
 let moment = require('moment');
 let router = express.Router();
 let Pk10 = require('../model/Pk10')
-let forecast = require('../util/forecast');
-let analysis = require('../util/analysis');
+let forecast = require('../util/forecast').foreCast;
+
+let analysis = require('../util/analysis').analysis;
 router.get('/test', (req, res, next) => {
     Pk10.find({}).limit(5).sort({ _id: -1 }).then(data => {
         res.json({
