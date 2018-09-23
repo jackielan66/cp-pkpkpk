@@ -11,9 +11,14 @@ let forecast = require('../util/forecast').foreCast;
 let analysis = require('../util/analysis').analysis;
 router.get('/test', (req, res, next) => {
     Pk10.find({}).limit(5).sort({ _id: -1 }).then(data => {
+        let section = 0;
+        if (Array.isArray(data)){
+            section = data[0].section
+        }
         res.json({
             code: 200,
-            data: forecast(data)
+            data: forecast(data),
+            section
         })
     })
 })
@@ -25,7 +30,7 @@ router.get('/data', (req, res, next) => {
             code: 200,
             data: {
                 content: analysis(result, type),
-                total:0
+                total: 0
             }
         })
     })
