@@ -89,7 +89,7 @@ class IndexPage extends Component {
                 v.btj = true;
             }
         })
-        console.log(section, 'section')
+        // console.log(section, 'section')
         return (
             <WingBlank>
                  
@@ -376,8 +376,7 @@ class IndexPage extends Component {
         }
 
         return <div style={{ marginTop: 30 }}>
-            {total_1.errorTotal >= 2 && _total_5.errorTotal < 15 && <audio autoPlay src={require("../assets/flumpool - OAOA (Instrumental) - instrumental.mp3")} controls="controls">
-            </audio>}
+            
             {total_1.errorTotal >= 3 && <audio autoPlay src={require("../assets/flumpool - OAOA (Instrumental) - instrumental.mp3")} controls="controls">
             </audio>}
             {listDom}
@@ -401,7 +400,7 @@ class IndexPage extends Component {
                 总计 (最近5期)
                 <span style={{ color: 'green' }}>成功{total_5.successTotal}次</span>，<span style={{ color: 'red' }}>失败{total_5.errorTotal}次</span>
             </div>
-            <div style={{ marginTop: 10 }}>
+            {/* <div style={{ marginTop: 10 }}>
                 总计 (最近6期)
                 <span style={{ color: 'green' }}>成功{total_6.successTotal}次</span>，<span style={{ color: 'red' }}>失败{total_6.errorTotal}次</span>
             </div>
@@ -424,7 +423,7 @@ class IndexPage extends Component {
             <div style={{ marginTop: 10 }}>
                 总计 (最近11期)
                 <span style={{ color: 'green' }}>成功{total_11.successTotal}次</span>，<span style={{ color: 'red' }}>失败{total_11.errorTotal}次</span>
-            </div>
+            </div> */}
 
 
 
@@ -444,7 +443,7 @@ class IndexPage extends Component {
                 总计 (4期)
                 <span style={{ color: 'green' }}>成功{_total_4.successTotal}次</span>，<span style={{ color: 'red' }}>失败{_total_4.errorTotal}次</span>
             </div> */}
-            <div style={{ marginTop: 10 }}>
+            <div style={{ marginTop: 30 }}>
                 总计 (5期)
                 <span style={{ color: 'green' }}>成功{_total_5.successTotal}次</span>，<span style={{ color: 'red' }}>失败{_total_5.errorTotal}次</span>
             </div>
