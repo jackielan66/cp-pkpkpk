@@ -11,7 +11,7 @@ const start = () => {
     let HH = now.getHours();
     let MM = now.getMinutes()
     if (HH >= 9) {
-        if (MM % 5 == 3) {
+        if (MM % 5 == 4) {
             console.log('MM', MM);
             request(url, (err, res, body) => {
                 if (!err) {
@@ -24,7 +24,7 @@ const start = () => {
 }
 
 function changeJqDom(body) {
-    let $ = cheerio.load(body);
+    let $ = cheerio.load(body,{decodeEntities: false});
     let num = $('h2').html();
     let data = [];
     let _data = []; // 数据所有制
