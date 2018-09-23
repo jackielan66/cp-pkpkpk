@@ -20,7 +20,7 @@ router.get('/test', (req, res, next) => {
 
 router.get('/data', (req, res, next) => {
     let type = req.query.type || 1;
-    Pk10.find().limit(40).sort({ _id: -1 }).then(result => {
+    Pk10.find().limit(240).sort({ _id: -1 }).then(result => {
         res.json({
             code: 200,
             data: {
