@@ -13,8 +13,8 @@ const start = () => {
     if (HH == 8) {
         try{
             Pk10.remove()
-        }catch{
-            
+        }catch(err){
+            console.log(err,'清理数据库')
         }
     }
     
