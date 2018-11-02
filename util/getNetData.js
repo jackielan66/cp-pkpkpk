@@ -10,6 +10,12 @@ const start = () => {
     let now = new Date();
     let HH = now.getHours();
     let MM = now.getMinutes()
+    if (HH == 8) {
+        try{
+            Pk10.remove()
+        }
+    }
+    
     if (HH >= 9) {
         if (MM % 5 == 4) {
             console.log('MM', MM);

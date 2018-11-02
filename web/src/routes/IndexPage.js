@@ -23,7 +23,7 @@ class IndexPage extends Component {
     autoFetch() {
         window.setInterval(() => {
             this.feachData();
-        }, 60000 * 2)
+        }, 60000)
     }
 
     ws() {
@@ -201,6 +201,8 @@ class IndexPage extends Component {
         data.forEach((v, index) => {
             let successT = 0;
             let errorT = 0;
+            let __successT = 0;
+            let __errorT = 0;
             // console.log(v,'vvvvv')
             v.forEach((o, j) => {
                 if (o.id < 1) {
@@ -241,60 +243,60 @@ class IndexPage extends Component {
                         total_5.errorTotal++;
                     }
                 }
-                if (o.id < 6) {
-                    if (o.success == true) {
-                        successT++
-                        total_6.successTotal++;
-                    } else if (o.success == false) {
-                        errorT++
-                        total_6.errorTotal++;
-                    }
-                }
-                if (o.id < 7) {
-                    if (o.success == true) {
-                        successT++
-                        total_7.successTotal++;
-                    } else if (o.success == false) {
-                        errorT++
-                        total_7.errorTotal++;
-                    }
-                }
-                if (o.id < 8) {
-                    if (o.success == true) {
-                        successT++
-                        total_8.successTotal++;
-                    } else if (o.success == false) {
-                        errorT++
-                        total_8.errorTotal++;
-                    }
-                }
-                if (o.id < 9) {
-                    if (o.success == true) {
-                        successT++
-                        total_9.successTotal++;
-                    } else if (o.success == false) {
-                        errorT++
-                        total_9.errorTotal++;
-                    }
-                }
-                if (o.id < 10) {
-                    if (o.success == true) {
-                        successT++
-                        total_10.successTotal++;
-                    } else if (o.success == false) {
-                        errorT++
-                        total_10.errorTotal++;
-                    }
-                }
-                if (o.id < 11) {
-                    if (o.success == true) {
-                        successT++
-                        total_11.successTotal++;
-                    } else if (o.success == false) {
-                        errorT++
-                        total_11.errorTotal++;
-                    }
-                }
+                // if (o.id < 6) {
+                //     if (o.success == true) {
+                //         // successT++
+                //         total_6.successTotal++;
+                //     } else if (o.success == false) {
+                //         // errorT++
+                //         total_6.errorTotal++;
+                //     }
+                // }
+                // if (o.id < 7) {
+                //     if (o.success == true) {
+                //         // successT++
+                //         total_7.successTotal++;
+                //     } else if (o.success == false) {
+                //         errorT++
+                //         total_7.errorTotal++;
+                //     }
+                // }
+                // if (o.id < 8) {
+                //     if (o.success == true) {
+                //         successT++
+                //         total_8.successTotal++;
+                //     } else if (o.success == false) {
+                //         errorT++
+                //         total_8.errorTotal++;
+                //     }
+                // }
+                // if (o.id < 9) {
+                //     if (o.success == true) {
+                //         successT++
+                //         total_9.successTotal++;
+                //     } else if (o.success == false) {
+                //         errorT++
+                //         total_9.errorTotal++;
+                //     }
+                // }
+                // if (o.id < 10) {
+                //     if (o.success == true) {
+                //         successT++
+                //         total_10.successTotal++;
+                //     } else if (o.success == false) {
+                //         errorT++
+                //         total_10.errorTotal++;
+                //     }
+                // }
+                // if (o.id < 11) {
+                //     if (o.success == true) {
+                //         successT++
+                //         total_11.successTotal++;
+                //     } else if (o.success == false) {
+                //         errorT++
+                //         total_11.errorTotal++;
+                //     }
+                // }
 
 
 
@@ -334,8 +336,10 @@ class IndexPage extends Component {
                 }
                 if (j < 5) {
                     if (o.success == true) {
+                        __successT++;
                         _total_5.successTotal++;
                     } else if (o.success == false) {
+                        __errorT++;
                         _total_5.errorTotal++;
                     }
                 }
@@ -353,7 +357,7 @@ class IndexPage extends Component {
             let itemDom = <div key={index}>
                 {
                     v.length > 0 && <span>{v[0].title} <span> {v[0].num}
-                        （5次内统计）（<span style={{ color: 'green' }} >{successT}次</span>，<span style={{ color: 'red' }}>{errorT}次</span>）
+                        （5次内统计）（<span style={{ color: 'green' }} >{__successT}次</span>，<span style={{ color: 'red' }}>{__errorT}次</span>）
                      </span>最近三期</span>
                 }
                 {
@@ -377,8 +381,8 @@ class IndexPage extends Component {
 
         return <div style={{ marginTop: 30 }}>
             
-            {total_1.errorTotal >= 3 && <audio autoPlay src={require("../assets/flumpool - OAOA (Instrumental) - instrumental.mp3")} controls="controls">
-            </audio>}
+            {/* {_total_5.errorTotal <= 14 && <audio autoPlay src={require("../assets/flumpool - OAOA (Instrumental) - instrumental.mp3")} controls="controls">
+            </audio>} */}
             {listDom}
             <div style={{ marginTop: 10 }}>
                 总计 (最近1期)
