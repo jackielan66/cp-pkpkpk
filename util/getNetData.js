@@ -13,6 +13,8 @@ const start = () => {
     if (HH == 8) {
         try{
             Pk10.remove()
+        }catch{
+            
         }
     }
     
