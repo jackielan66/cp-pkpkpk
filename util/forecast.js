@@ -70,6 +70,7 @@ function yuce(NumberRecord, _res) {
 
             let str = `号码${nowNum}， 推荐位置：${numPos + 1}；====> ：${copyArr}`
             let _obj = {
+                num:nowNum,
                 pos: numPos,
                 msg: str,
                 qishu:_res[0].section
@@ -79,7 +80,6 @@ function yuce(NumberRecord, _res) {
             currentYucePos.push(numPos);
             // console.log(currentYucePos,'==currentYucePos 预测')
             // 当期的位置的位置暴露出去end
-            return;
         }
     })
     return data;

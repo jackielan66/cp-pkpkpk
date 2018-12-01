@@ -11,13 +11,13 @@ const start = () => {
     let HH = now.getHours();
     let MM = now.getMinutes()
     if (HH == 8) {
-        try{
-            Pk10.remove()
-        }catch(err){
-            console.log(err,'清理数据库')
-        }
+        // try {
+        //     Pk10.remove()
+        // } catch (err) {
+        //     console.log(err, '清理数据库')
+        // }
     }
-    
+
     if (HH >= 9) {
         if (MM % 5 == 4) {
             console.log('MM', MM);
@@ -32,7 +32,7 @@ const start = () => {
 }
 
 function changeJqDom(body) {
-    let $ = cheerio.load(body,{decodeEntities: false});
+    let $ = cheerio.load(body, { decodeEntities: false });
     let num = $('h2').html();
     let data = [];
     let _data = []; // 数据所有制
@@ -41,8 +41,10 @@ function changeJqDom(body) {
     })
     $('.cqssc-nums span').each((index, value) => {
         let obj = {}
+        obj.section = num;
         obj.pos = index;
         obj.num = $(value).text();
+        obj.time=Date.now();
         if (index == 0) {
             obj.map = [_data[0], _data[1], _data[9]]
         } else if (index == 9) {
@@ -59,10 +61,10 @@ function changeJqDom(body) {
         time: Date.now()
     }).save().then(() => {
         // 新添加的，报错数据，请求个自动走一次接口，用来websocket的
-        let api_test = 'http://localhost:3001/api/test'
-        let api_data = 'http://localhost:3001/api/data'
-        request(api_test, (err, res, body) => { })
-        request(api_data, (err, res, body) => { })
+        // let api_test = 'http://localhost:3001/api/test'
+        // let api_data = 'http://localhost:3001/api/data'
+        // request(api_test, (err, res, body) => { })
+        // request(api_data, (err, res, body) => { })
     });
 }
 

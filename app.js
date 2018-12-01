@@ -11,7 +11,7 @@ app.all('*', function (req, res, next) {
     next();
 });
 app.use('/api', require('./router/api'))
-app.use('/public', express.static('public'))
+app.use('/', express.static('public'))
 
 let port = 3001;
 mongoose.connect('mongodb://localhost:27017/pk10', err => {
@@ -70,6 +70,4 @@ setInterval(() => {
             }
         }
     }
-
-
 }, 10000)

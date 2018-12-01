@@ -15,6 +15,7 @@ class IndexPage extends Component {
     }
 
     componentDidMount() {
+        this.state.num = window.localStorage.getItem('num')
         this.feachData();
         this.ws()
         this.autoFetch()
@@ -110,6 +111,8 @@ class IndexPage extends Component {
     }
 
     renderYuce(yuce) {
+       
+        
         if (yuce.length == 0) return <div>本期不推荐哦！</div>
         return yuce.map((v, index) => {
             let style = {};
