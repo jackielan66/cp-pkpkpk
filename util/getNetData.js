@@ -44,7 +44,6 @@ function changeJqDom(body) {
         obj.section = num;
         obj.pos = index;
         obj.num = $(value).text();
-        obj.time=Date.now();
         if (index == 0) {
             obj.map = [_data[0], _data[1], _data[9]]
         } else if (index == 9) {

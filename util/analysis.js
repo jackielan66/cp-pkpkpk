@@ -19,6 +19,7 @@ function fenxiResult(_res, initData) {
     /**
      * _res 接口返回的原始数据
      */
+    console.log(initData,'initDatainitDatainitData')
     let returnData = [];
 
     initData.forEach(item => {
@@ -36,6 +37,7 @@ function fenxiResult(_res, initData) {
                 _obj.num = item[i].num;
                 _obj.pos = item[i].pos;
                 _obj.map = item[i].map;
+                _obj.time = item[i].time;
                 _obj.section = item[i].section;
                 _result.push(_obj)
             }
@@ -59,6 +61,7 @@ function fenxiResult(_res, initData) {
             _obj.id = v.id - 1;
             _obj.num = v.num;
             _obj.section = v.section;
+            _obj.time = v.time;
             // _obj.title = v.title;
             _obj.prevPos = v.pos; // 前一期位置
             if (_repeat) {

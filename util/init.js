@@ -14,6 +14,7 @@ let init = function method(res,num) {
     if (res.length <= 3) return [];
     res.forEach((v, index) => {
         let data = v.data;
+        let time = v.time;
         No1[index] = _.find(data, o => o.num == "01");
         No2[index] = _.find(data, o => o.num == "02");
         No3[index] = _.find(data, o => o.num == "03");
@@ -24,6 +25,17 @@ let init = function method(res,num) {
         No8[index] = _.find(data, o => o.num == "08");
         No9[index] = _.find(data, o => o.num == "09");
         No10[index] = _.find(data, o => o.num == "10");
+
+        No1[index].time=time;
+        No2[index].time=time;
+        No3[index].time=time;
+        No4[index].time=time;
+        No5[index].time=time;
+        No6[index].time=time;
+        No7[index].time=time;
+        No8[index].time=time;
+        No9[index].time=time;
+        No10[index].time=time;
     });
     if(num == 1){
         return [No1]
