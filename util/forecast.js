@@ -4,6 +4,7 @@
 let init = require('./init')
 let _ = require('lodash');
 let currentYucePos = []
+let UserOrder = require('../model/UserOrder')
 
 function foreCast(data) {
     // return yuce({},data);
@@ -18,6 +19,7 @@ function yuce(NumberRecord, _res) {
      */
     let data = [];
     let newlyRecord = _res[0].data;
+    let hotMap = getHotList(_res)
     NumberRecord.forEach((v, index) => {
         // 规则 1 是不是同一个方向
         let _rule1 = (v[0].pos - v[1].pos > 0 && v[1].pos - v[2].pos > 0) ||
@@ -51,43 +53,126 @@ function yuce(NumberRecord, _res) {
                 afterNum = newlyRecord[numPos + 1].num
             }
             let arr = [beforeNum, afterNum, nowNum];
-            resultNum = _.difference(['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'], arr);
+
+            let hotList = [];;
+            // resultNum = hotList;
+            let originData = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
+
+            if (hotMap[numPos].length > 1) {
+                originData = [];
+                hotList = _.orderBy(hotMap[numPos], 'count', 'desc')
+                // console.log(hotList, 'hotList')
+                hotList.forEach(v => {
+                    originData.push(v.num)
+                })
+            }
+            // console.log('originData', originData)
+            resultNum = _.difference(originData, arr);
             // 抽牌算法
             let copyArr = [],
                 n = resultNum.length,
                 i;
-            while (n) {
-                i = Math.floor(Math.random() * resultNum.length);
-                if (i in resultNum) {
-                    copyArr.push(resultNum[i]);
-                    delete resultNum[i];
-                    n--;
-                }
-            }
+            copyArr = resultNum;
+            // while (n) {
+            //     i = Math.floor(Math.random() * resultNum.length);
+            //     if (i in resultNum) {
+            //         copyArr.push(resultNum[i]);
+            //         delete resultNum[i];
+            //         n--;
+            //     }
+            // }
             // 抽牌算法end
-            copyArr.splice(Math.floor(Math.random() * copyArr.length), 1);
-            copyArr.splice(Math.floor(Math.random() * copyArr.length), 1);
+            // copyArr.splice(Math.floor(Math.random() * copyArr.length), 1);
+            // copyArr.splice(Math.floor(Math.random() * copyArr.length), 1);
+
+            if (copyArr.length > 5) {
+                copyArr = copyArr.filter((v, index) => {
+                    return index < 5
+                })
+            }
+
 
             let str = `号码${nowNum}， 推荐位置：${numPos + 1}；====> ：${copyArr}`
             let _obj = {
-                num:nowNum,
+                num: nowNum,
                 pos: numPos,
                 msg: str,
-                qishu:_res[0].section
+                qishu: _res[0].section
             }
             data.push(_obj);
             // 当期的位置的位置暴露出去start
             currentYucePos.push(numPos);
             // console.log(currentYucePos,'==currentYucePos 预测')
             // 当期的位置的位置暴露出去end
+            let params = {
+                section: _obj.qishu,
+                num: nowNum
+            }
+            UserOrder.findOne(params).then(isSaved => {
+                if (!isSaved) {
+                    new UserOrder(Object.assign({}, {
+                        order: copyArr,
+                    }, params)).save();
+                } else {
+
+                }
+            })
         }
     })
     return data;
 }
 
-function getcurrentYucePos(){
+function getcurrentYucePos() {
     return currentYucePos
 }
+
+
+const getHotList = (getHotList, pos) => {
+    // 返回的是哪个位置的冷热号
+    let initList = [];
+    if (Array.isArray(getHotList) && getHotList.length > 0) {
+        getHotList.forEach(v => {
+            // console.log(v, 'v')
+            initList.push(v.data)
+        })
+    }
+    let hotMap = {};
+    let returnData = {};
+    initList.forEach((v, index) => {
+        v.forEach((j, k) => {
+            if (!hotMap[j.pos]) {
+                hotMap[j.pos] = []
+            }
+        })
+        for (let key in hotMap) {
+            hotMap[key].push(v[key].num)
+        }
+    })
+
+    for (let key in hotMap) {
+        if (returnData[key] == null) {
+            returnData[key] = [];
+        }
+        hotMap[key].forEach(v => {
+            let obj = _.find(returnData[key], { num: v })
+            if (obj) {
+                returnData[key].forEach(j => {
+                    j.count = j.count + 1
+                })
+            } else {
+                returnData[key].push({
+                    num: v,
+                    count: 0
+                })
+            }
+
+        })
+    }
+    // 返回值计算
+    // console.log(returnData, 'returnData')
+    return returnData
+}
+
 
 exports.foreCast = foreCast;
 exports.getcurrentYucePos = getcurrentYucePos;

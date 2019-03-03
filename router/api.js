@@ -11,7 +11,13 @@ let forecast = require('../util/forecast').foreCast;
 
 let analysis = require('../util/analysis').analysis;
 router.get('/test', (req, res, next) => {
-    Pk10.find({}).limit(5).sort({ _id: -1 }).then(data => {
+    let startTime = moment(req.query.startTime || Date.now()).startOf('day');
+    let endTime = moment(req.query.endTime || req.query.startTime).endOf('day'); // req.query.endTime || Date.now();
+    let time = {
+        $gte: startTime,
+        $lte: endTime
+    }
+    Pk10.find({ 'time': time }).sort({ _id: -1 }).then(data => {
         let section = 0;
         if (Array.isArray(data)) {
             section = data[0].section

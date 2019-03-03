@@ -19,7 +19,7 @@ function fenxiResult(_res, initData) {
     /**
      * _res 接口返回的原始数据
      */
-    console.log(initData,'initDatainitDatainitData')
+    // console.log(initData,'initDatainitDatainitData')
     let returnData = [];
 
     initData.forEach(item => {
