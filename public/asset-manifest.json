@@ -83,11 +83,11 @@
   "/57.async.js": "/57.async.js",
   "/static/flumpool - OAOA (Instrumental) - instrumental.mp3": "/static/flumpool - OAOA (Instrumental) - instrumental.26feb74a.mp3",
   "/index.html": "/index.html",
-  "/favicon.png": "/favicon.png",
   "/icons/icon-128x128.png": "/icons/icon-128x128.png",
+  "/favicon.png": "/favicon.png",
   "/icons/icon-192x192.png": "/icons/icon-192x192.png",
   "/manifest.json": "/manifest.json",
   "/pwacompat.min.js": "/pwacompat.min.js",
-  "/precache-manifest.86f60301b2cc7230ae0927f2b7a39e70.js": "/precache-manifest.86f60301b2cc7230ae0927f2b7a39e70.js",
+  "/precache-manifest.ad350df39a3b050797b98e793f1fb152.js": "/precache-manifest.ad350df39a3b050797b98e793f1fb152.js",
   "/service-worker.js": "/service-worker.js"
 }
