@@ -6,10 +6,13 @@ let _ = require('lodash');
 let moment = require('moment');
 let init = require('../util/init')
 let router = express.Router();
-let Pk10 = require('../model/Pk10')
+let Pk10 = require('../model/Pk10');
+let UserOrder = require('../model/UserOrder')
 let forecast = require('../util/forecast').foreCast;
 
 let analysis = require('../util/analysis').analysis;
+let getRate = require('../util/getRate').getRate;
+
 router.get('/test', (req, res, next) => {
     let startTime = moment(req.query.startTime || Date.now()).startOf('day');
     let endTime = moment(req.query.endTime || req.query.startTime).endOf('day'); // req.query.endTime || Date.now();
@@ -74,7 +77,27 @@ router.get('/allNum', (req, res, next) => {
             }
         })
     })
-})
+});
 
+
+// 预测中奖率
+router.get('/win-rate', (req, res, next) => {
+    let startTime = moment(req.query.startTime || Date.now()).startOf('day');
+    let endTime = moment(req.query.endTime || req.query.startTime).endOf('day'); // req.query.endTime || Date.now();
+    let time = {
+        $gte: startTime,
+        $lte: endTime
+    }
+    Pk10.find({ 'time': time }).sort({ _id: -1 }).then(data => {
+        UserOrder.find({ 'time': time }).sort({ _id: -1 }).then(result => {
+            const _res = getRate(result,data);
+            res.json({
+                code: 200,
+                data: _res
+            })
+        })
+    })
+   
+})
 
 module.exports = router;

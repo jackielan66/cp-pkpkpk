@@ -3,6 +3,8 @@ let mongoose = require('mongoose');
 let pkShema = mongoose.Schema({
     section: String,
     num: Number,
-    order: Array
+    pos: Number,
+    order: Array,
+    time:Date
 })
 module.exports = mongoose.model('UserOrder', pkShema)

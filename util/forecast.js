@@ -104,11 +104,23 @@ function yuce(NumberRecord, _res) {
             currentYucePos.push(numPos);
             // console.log(currentYucePos,'==currentYucePos 预测')
             // 当期的位置的位置暴露出去end
+
+            // 2019-4-21 新加的保存预测d订单功能 start
             let params = {
                 section: _obj.qishu,
-                num: nowNum
+                num: nowNum,
+                pos: numPos,
+                time: Date.now(),
+                title:'本期的预测结果'
             }
-            UserOrder.findOne(params).then(isSaved => {
+            let search = {
+                section: _obj.qishu,
+                num: nowNum,
+                pos: numPos,
+            }
+            console.log('走保存了')
+            UserOrder.findOne(search).then(isSaved => {
+                console.log('走保存了')
                 if (!isSaved) {
                     new UserOrder(Object.assign({}, {
                         order: copyArr,
@@ -117,6 +129,7 @@ function yuce(NumberRecord, _res) {
 
                 }
             })
+            // 2019-4-21 新加的保存预测d订单功能 end
         }
     })
     return data;

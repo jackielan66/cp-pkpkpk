@@ -3,8 +3,10 @@ const path = require('path')
 let mongoose = require('mongoose');
 let app = express();
 let startGetData = require('./util/getNetData.js')
+let Pk10 = require('./model/Pk10');
 let _ = require('lodash');
-
+let moment = require('moment');
+let forecast = require('./util/forecast').foreCast;
 startGetData();
 //设置跨域访问
 app.all('*', function (req, res, next) {
@@ -58,27 +60,21 @@ let api_data = 'http://localhost:3001/api/data'
 setInterval(() => {
     let now = new Date();
     let HH = now.getHours();
-    let MM = now.getMinutes()
+    let MM = now.getMinutes();
     if (HH >= 9) {
-        if (MM % 5 == 4) {
-            // request(api_test, (err, res, body) => { })
-            // request(api_data, (err, res, body) => { })
-            let currentYucePos = getcurrentYucePos()
-            let currentErrorPos = getCurrentErrorPos()
-            if (wsServer.clients) {
-                wsServer.clients.forEach(v => {
-                    // console.log(currentYucePos,'==currentYucePos 预测')
-                    // console.log(currentErrorPos,'==currentErrorPos错误')
-                    let canBuy = 0;
-                    currentYucePos.forEach(y => {
-                        if (_.findIndex(currentErrorPos, o => o == y) > -1) {
-                            canBuy++;
-                        }
-                    })
-                    let send = false;
-                    v.send(canBuy)
-                });
-            }
-        }
+        getAllNum()
     }
 }, 10000)
+
+// TODO 获取更多的值
+function getAllNum() {
+    let startTime = moment(Date.now()).startOf('day');
+    let endTime = moment(Date.now()).endOf('day'); // req.query.endTime || Date.now();
+    let time = {
+        $gte: startTime,
+        $lte: endTime
+    }
+    Pk10.find({ 'time': time }).sort({ _id: -1 }).then(data => {
+        forecast(data);
+    })
+}
