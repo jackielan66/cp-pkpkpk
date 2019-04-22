@@ -64,7 +64,7 @@ setInterval(() => {
     if (HH >= 9) {
         getAllNum()
     }
-}, 10000)
+}, 100000)
 
 // TODO 获取更多的值
 function getAllNum() {

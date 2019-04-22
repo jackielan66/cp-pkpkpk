@@ -118,7 +118,7 @@ function yuce(NumberRecord, _res) {
                 num: nowNum,
                 pos: numPos,
             }
-            console.log('走保存了')
+            // console.log('走保存了')
             UserOrder.findOne(search).then(isSaved => {
                 console.log('走保存了')
                 if (!isSaved) {
