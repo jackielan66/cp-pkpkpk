@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import styles from './IndexPage.css';
-import { Button, WhiteSpace, WingBlank,Tag } from 'antd-mobile';
+import { Button, WhiteSpace, WingBlank, Tag } from 'antd-mobile';
 import { getYuce, getData, WS_HOST } from '../services/example';
 import { findIndex } from 'lodash'
 
@@ -10,7 +10,7 @@ class IndexPage extends Component {
     state = {
         yuce: [],
         data: {},
-        section:'',
+        section: '',
         isCan: false
     }
 
@@ -24,38 +24,38 @@ class IndexPage extends Component {
     autoFetch() {
         window.setInterval(() => {
             this.feachData();
-        }, 60000)
+        }, 30000)
     }
 
     ws() {
-        let That = this;
-        var ws = new WebSocket(WS_HOST);
-        // ws.send("hello");
-        ws.onopen = function (event) { };
-        ws.onmessage = function (event) {
-            console.log(event.data)
-            if (event && event.data > 0) {
-                That.setState({ isCan: true })
-            } else {
-                That.setState({ isCan: false })
-            }
-        };
+        // let That = this;
+        // var ws = new WebSocket(WS_HOST);
+        // // ws.send("hello");
+        // ws.onopen = function (event) { };
+        // ws.onmessage = function (event) {
+        //     console.log(event.data)
+        //     if (event && event.data > 0) {
+        //         That.setState({ isCan: true })
+        //     } else {
+        //         That.setState({ isCan: false })
+        //     }
+        // };
     }
 
     feachData() {
         getYuce().then(_res => {
-            //  console.log(_res, '_res')
-            if (_res.data.code == 200) {
+            // console.log(_res, '_res')
+            if (_res && _res.data && _res.data.code == 200) {
                 this.setState({
                     yuce: _res.data.data,
-                    section:_res.data.section
+                    section: _res.data.section
                 })
             }
 
         })
         getData().then(_res => {
             // console.log(_res, '_res')
-            if (_res.data.code == 200) {
+            if (_res && _res.data && _res.data.code == 200) {
                 this.setState({
                     data: _res.data.data
                 })
@@ -64,11 +64,12 @@ class IndexPage extends Component {
     }
 
     render() {
-        const { yuce, data,section } = this.state;
-        // console.log(data, 'data')
+        const { yuce, data, section } = this.state;
+
         let content = data.content || []
         let newlyErrorPos = [];
         let newlySuccessPos = []
+           console.log(content, 'content')
         content.forEach((v, index) => {
             v.forEach((o, j) => {
                 if (o.id == 0 && o.success == false) {
@@ -82,6 +83,7 @@ class IndexPage extends Component {
             })
         })
         // console.log(newlyErrorPos, 'newlyErrorPos')
+        console.log(yuce,'yuce')
         yuce.forEach(v => {
             if (findIndex(newlyErrorPos, o => o == v.pos) > -1) {
                 v.tj = true;
@@ -93,11 +95,11 @@ class IndexPage extends Component {
         // console.log(section, 'section')
         return (
             <WingBlank>
-                 
+
                 <Button style={{ marginBottom: 20 }} onClick={() => { this.setState({ isCan: false }) }} type="primary">知道啦，关闭音乐</Button>
 
                 <Button style={{ marginBottom: 20 }} onClick={this.feachData.bind(this)} type="primary">获取</Button>
-                
+
                 <Tag style={{ marginBottom: 20 }}  >{section}</Tag>
 
                 {this.renderYuce(yuce)}
@@ -111,8 +113,8 @@ class IndexPage extends Component {
     }
 
     renderYuce(yuce) {
-       
-        
+
+
         if (yuce.length == 0) return <div>本期不推荐哦！</div>
         return yuce.map((v, index) => {
             let style = {};
@@ -383,7 +385,7 @@ class IndexPage extends Component {
         }
 
         return <div style={{ marginTop: 30 }}>
-            
+
             {/* {_total_5.errorTotal <= 14 && <audio autoPlay src={require("../assets/flumpool - OAOA (Instrumental) - instrumental.mp3")} controls="controls">
             </audio>} */}
             {listDom}
