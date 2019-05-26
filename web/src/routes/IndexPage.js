@@ -44,7 +44,7 @@ class IndexPage extends Component {
 
     feachData() {
         getYuce().then(_res => {
-            // console.log(_res, '_res')
+            console.log(_res, '_res')
             if (_res && _res.data && _res.data.code == 200) {
                 this.setState({
                     yuce: _res.data.data,
@@ -65,11 +65,10 @@ class IndexPage extends Component {
 
     render() {
         const { yuce, data, section } = this.state;
-
+        // console.log(data, 'data')
         let content = data.content || []
         let newlyErrorPos = [];
         let newlySuccessPos = []
-           console.log(content, 'content')
         content.forEach((v, index) => {
             v.forEach((o, j) => {
                 if (o.id == 0 && o.success == false) {
@@ -83,7 +82,6 @@ class IndexPage extends Component {
             })
         })
         // console.log(newlyErrorPos, 'newlyErrorPos')
-        console.log(yuce,'yuce')
         yuce.forEach(v => {
             if (findIndex(newlyErrorPos, o => o == v.pos) > -1) {
                 v.tj = true;

@@ -3,10 +3,8 @@ const path = require('path')
 let mongoose = require('mongoose');
 let app = express();
 let startGetData = require('./util/getNetData.js')
-let Pk10 = require('./model/Pk10');
+
 let _ = require('lodash');
-let moment = require('moment');
-let forecast = require('./util/forecast').foreCast;
 startGetData();
 //设置跨域访问
 app.all('*', function (req, res, next) {
@@ -38,43 +36,46 @@ mongoose.connect('mongodb://localhost:27017/pk10', err => {
 })
 
 
-//  ================== ws 
-const ws = require('ws')
-const request = require('request')
-const { Server } = ws
-let getcurrentYucePos = require('./util/forecast').getcurrentYucePos;
-let getCurrentErrorPos = require('./util/analysis').getCurrentErrorPos;
+// //  ================== ws 
+// const ws = require('ws')
+// const request = require('request')
+// let Pk10 = require('./model/Pk10');
+// const { Server } = ws
+// let moment = require('moment');
+// let forecast = require('./util/forecast').foreCast;
+// let getcurrentYucePos = require('./util/forecast').getcurrentYucePos;
+// let getCurrentErrorPos = require('./util/analysis').getCurrentErrorPos;
 
 
-const wsServer = new Server({ port: 8006 });
-wsServer.on('connection', webSocket => {
-    webSocket.send(`服务端主动发送消息`)
-    webSocket.on('message', message => {
-        console.log('接受到消息', message)
-    })
-})
+// const wsServer = new Server({ port: 8006 });
+// wsServer.on('connection', webSocket => {
+//     webSocket.send(`服务端主动发送消息`)
+//     webSocket.on('message', message => {
+//         console.log('接受到消息', message)
+//     })
+// })
 
 
-let api_test = 'http://localhost:3001/api/test'
-let api_data = 'http://localhost:3001/api/data'
-setInterval(() => {
-    let now = new Date();
-    let HH = now.getHours();
-    let MM = now.getMinutes();
-    if (HH >= 9) {
-        getAllNum()
-    }
-}, 100000)
+// let api_test = 'http://localhost:3001/api/test'
+// let api_data = 'http://localhost:3001/api/data'
+// setInterval(() => {
+//     let now = new Date();
+//     let HH = now.getHours();
+//     let MM = now.getMinutes();
+//     if (HH >= 9) {
+//         getAllNum()
+//     }
+// }, 100000)
 
-// TODO 获取更多的值
-function getAllNum() {
-    let startTime = moment(Date.now()).startOf('day');
-    let endTime = moment(Date.now()).endOf('day'); // req.query.endTime || Date.now();
-    let time = {
-        $gte: startTime,
-        $lte: endTime
-    }
-    Pk10.find({ 'time': time }).sort({ _id: -1 }).then(data => {
-        forecast(data);
-    })
-}
+// // TODO 获取更多的值
+// function getAllNum() {
+//     let startTime = moment(Date.now()).startOf('day');
+//     let endTime = moment(Date.now()).endOf('day'); // req.query.endTime || Date.now();
+//     let time = {
+//         $gte: startTime,
+//         $lte: endTime
+//     }
+//     Pk10.find({ 'time': time }).sort({ _id: -1 }).then(data => {
+//         forecast(data);
+//     })
+// }
