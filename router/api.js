@@ -13,7 +13,7 @@ let forecast = require('../util/forecast').foreCast;
 let analysis = require('../util/analysis').analysis;
 let getRate = require('../util/getRate').getRate;
 
-router.get('/test', (req, res, next) => {
+router.get('/forecast', (req, res, next) => {
     let startTime = moment(req.query.startTime || Date.now()).startOf('day');
     let endTime = moment(req.query.endTime || req.query.startTime).endOf('day'); // req.query.endTime || Date.now();
     let time = {
@@ -33,8 +33,9 @@ router.get('/test', (req, res, next) => {
     })
 })
 
+// 
 router.get('/data', (req, res, next) => {
-    let type = req.query.type || 1;
+    let type = req.query.type || -1;
     Pk10.find().limit(240).sort({ _id: -1 }).then(result => {
         res.json({
             code: 200,

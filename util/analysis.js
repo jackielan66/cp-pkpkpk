@@ -8,10 +8,10 @@
  */
 let init = require('./init')
 let _ = require('lodash');
-let currentErrorPos = []; // 上一期最近三个连续的数字位置集合
+// let currentErrorPos = []; // 上一期最近三个连续的数字位置集合
 
 function analysis(data, num) {
-    currentErrorPos = []; // 走分析其中先把重置
+    // currentErrorPos = []; // 走分析其中先把重置
     return fenxiResult(data, init(data, num));
 }
 
@@ -26,7 +26,7 @@ function fenxiResult(_res, initData) {
         /**
          * item 是每个号码的位置以及最近位置以及周边三期位置集合
          */
-        // console.log(item, 'itemitem')
+        console.log(item, 'itemitem')
         let _result = [] // 整理这个号码某期 有规则一的号码集合
         for (let i = 0; i < item.length - 2; i++) {
             let _rule1 = ruleType__1(item, i);
@@ -73,7 +73,7 @@ function fenxiResult(_res, initData) {
             }
             // 新加的整理错误数据的集合 start
             if (_obj.id == 0 && _obj.success == false) {
-                currentErrorPos.push(_obj.prevPos)
+                // currentErrorPos.push(_obj.prevPos)
             }
             // 新加的整理错误数据的集合 end
             detailData.push(_obj)
@@ -94,7 +94,7 @@ function ruleType__1(item, i) {
 
 
 function getCurrentErrorPos() {
-    return currentErrorPos
+    // return currentErrorPos
 }
 
 module.exports = {
