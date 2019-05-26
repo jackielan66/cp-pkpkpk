@@ -68,7 +68,9 @@ class IndexPage extends Component {
         // console.log(data, 'data')
         let content = data.content || []
         let newlyErrorPos = [];
-        let newlySuccessPos = []
+        let newlySuccessPos = [];
+
+
         content.forEach((v, index) => {
             v.forEach((o, j) => {
                 if (o.id == 0 && o.success == false) {
@@ -103,27 +105,29 @@ class IndexPage extends Component {
                 {this.renderYuce(yuce)}
                 {this.renderData(content)}
 
-                {this.state.isCan > 0 && <audio autoPlay src={require("../assets/flumpool - OAOA (Instrumental) - instrumental.mp3")} controls="controls">
-                </audio>}
+
 
             </WingBlank>
         );
     }
 
     renderYuce(yuce) {
-
+        let _repeatSamePos = false; // 同一个位置是否重复了
 
         if (yuce.length == 0) return <div>本期不推荐哦！</div>
         return yuce.map((v, index) => {
             let style = {};
             if (v.tj == true) {
                 style.background = 'red'
+                _repeatSamePos=true;
             }
             if (v.btj == true) {
                 style.background = 'green'
             }
             return <div key={index} style={style} >
                 {v.msg}
+                {_repeatSamePos && <audio autoPlay src={require("../assets/flumpool - OAOA (Instrumental) - instrumental.mp3")} controls="controls">
+                </audio>}
             </div>
         })
     }
